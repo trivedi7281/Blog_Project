@@ -213,8 +213,104 @@
                             </div>
                             <hr>
                         </div>
+                        <aside class="sidebar">
+                            <h1 class="section-heading">Sidebar</h1>
+                            <div class="related-video">
+                                <h2>Related Videos</h2>
+                                <div class="col">
+                                    <div class="small-img-row">
+                                        <div class="small-img">
+                                            <img src="./media/pic1.png" alt="">
+                                            <img src="./media/play.png" alt="" class="play-btn" onclick="playVideo('./media/video.mp4')">
+                                        </div>
+                                        <p>How to add multiple video and make video Gallery.</p>
+                                    </div>
+                                    <div class="small-img-row">
+                                        <div class="small-img">
+                                            <img src="./media/pic2.png" alt="">
+                                            <img src="./media/play.png" alt="" class="play-btn" onclick="playVideo('./media/video2.mp4')">
+                                        </div>
+                                        <p>How to add multiple video and make video Gallery.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="video-player" id="videoPlayer">
+                                <video width="100%" controls autoplay id="myVideo">
+                                    <source src="./media/video.mp4" type="video/mp4">
+                                </video>
+                                <img src="./media/close.png" alt="" class="close-btn" onclick="stopVideo()">
+                            </div>
+                            <div class="dict-input">
+                                <h2>Helping Dictionary</h2>
+                                <div class="form_wrap">
+                                    <div class="input-wrap">
+                                        <input type="text" placeholder="Type your word..." id="inputDict">
+                                        <button id="search" class="search">Search</button>
+                                    </div>
+                                </div>
+                                <div class="data">
+                                    <span class="loading">Loading...</span>
+                                    <p class="def"></p>
+                                    <div class="audio"></div>
+                                    <div class="dispAlert"></div>
+                                    <div class="not_Found"></div>
+                                </div>
+                            </div>
+                            <div class="category">
+                                <h2>Categories</h2>
+
+                                <ul class="category-list">
+                                    <li class="list-items2">
+                                        <a href="#">Softwares</a>
+                                        <span class="count">(02)</span>
+                                    </li>
+
+                                    <li class="list-items2">
+                                        <a href="#">Cooking</a>
+                                        <span class="count">(02)</span>
+                                    </li>
+
+                                    <li class="list-items2">
+                                        <a href="#">Technical</a>
+                                        <span class="count">(03)</span>
+                                    </li>
+
+                                    <li class="list-items2">
+                                        <a href="#">Automations</a>
+                                        <span class="count">(05)</span>
+                                    </li>
+
+                                    <li class="list-items2">
+                                        <a href="#">Tools</a>
+                                        <span class="count">(05)</span>
+                                    </li>
+
+                                    <li class="list-items2">
+                                        <a href="#">What Next</a>
+                                        <span class="count">(05)</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="popular-tags">
+                                <h2>Popular Tags</h2>
+                                <div class="tags">
+                                    <a href="#" class="tag">Software</a>
+                                    <a href="#" class="tag">Cooking</a>
+                                    <a href="#" class="tag">India</a>
+                                    <a href="#" class="tag">Limited</a>
+                                    <a href="#" class="tag">Tools</a>
+                                    <a href="#" class="tag">Technology</a>
+                                    <a href="#" class="tag">Automation</a>
+                                    <a href="#" class="tag">Maven</a>
+                                    <a href="#" class="tag">Cucumber</a>
+                                    <a href="#" class="tag">Framework</a>
+                                </div>
+                            </div>
+                        </aside>
                     </div>
+
                 </section>
+
                 <footer>
                     <div class="container">
                         <div class="box">
@@ -305,7 +401,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script src="./js/app.js"></script>
+    <script>
+        var videoPlayer = document.getElementById("videoPlayer");
+        var myVideo = document.getElementById("myVideo");
 
+        function stopVideo() {
+            videoPlayer.style.display = "none";
+        }
+
+        function playVideo(file) {
+            myVideo.src = file;
+            videoPlayer.style.display = "block";
+
+        }
+    </script>
 </body>
 
 
