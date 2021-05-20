@@ -1,3 +1,22 @@
+<?php
+include "php/config.php";
+$new_url = "";
+if (isset($_GET)) {
+    foreach ($_GET as $key => $val) {
+        $u = mysqli_real_escape_string($conn, $key);
+        $new_url = str_replace('/', '', $u);
+    }
+    $sql = mysqli_query($conn, "SELECT full_url FROM url WHERE shorten_url = '{$new_url}'");
+    if (mysqli_num_rows($sql) > 0) {
+        $sql2 = mysqli_query($conn, "UPDATE url SET clicks = clicks + 1 WHERE shorten_url = '{$new_url}'");
+        if ($sql2) {
+            $full_url = mysqli_fetch_assoc($sql);
+            header("Location:" . $full_url['full_url']);
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +27,7 @@
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <title>Home</title>
 </head>
 
@@ -21,12 +40,6 @@
                 <h2 class="brand_name">Alcove</h2>
             </div>
             <div class="mobile-nav">
-                <!-- <div class="cart">
-                    <div class="flex items-center">
-                        <img src="./icons/cart-dark.svg" alt="">
-                        <a href="#">0 Items - ($0.00)</a>
-                    </div>
-                </div> -->
                 <div class="nav-top">
                     <ul>
                         <li>
@@ -75,12 +88,10 @@
             <div class="site-content">
                 <header class="topbar">
                     <div class="container flex justify-between item-center">
-                        <div class="icons">
-                            <a href="#"><img src="./icons/036-facebook.svg" alt=""></a>
-                            <a href="#"><img src="./icons/008-twitter.svg" alt=""></a>
-                            <a href="#"><img src="./icons/033-google-plus.svg" alt=""></a>
-                            <a href="#"><img src="./icons/029-instagram.svg" alt=""></a>
-                            <a href="#"><img src="./icons/015-whatsapp.svg" alt=""></a>
+                        <div class="branding flex justify-between justify-center icon-resize">
+                            <h2 class="brand_name">The</h2>
+                            <img src="./icons/018-gems.svg" alt="">
+                            <h2 class="brand_name">Alcove</h2>
                         </div>
                         <div class="search-box">
                             <input type="text" placeholder="Type to Search...">
@@ -123,56 +134,17 @@
                         </div>
                     </div>
                 </header>
-
                 <nav>
-                    <div class="top">
-                        <div class="container justify-between">
-
-                            <div class="branding flex justify-between justify-center icon-resize">
-                                <h2 class="brand_name">The</h2>
-                                <img src="./icons/018-gems.svg" alt="">
-                                <h2 class="brand_name">Alcove</h2>
-                            </div>
-
-                        </div>
-                    </div>
                     <div class="navbar magic-shadow">
                         <div class="container flex justify-center">
-                            <a href="#" class="active">Home</a>
-                            <a href="#">Product</a>
-                            <a href="#">Blog</a>
-                            <a href="#">Gallery</a>
+                            <a href="./index.html" class="active">Home</a>
+                            <a href="#">Portfolio Maker</a>
+                            <a href="#shortner_link">Shortner Link</a>
+                            <a href="#">Stories</a>
                             <a href="#">About Us</a>
                         </div>
                     </div>
                 </nav>
-                <!-------------Hero section-------------->
-                <!-- <header class="hero flex item-center">
-                    <div class="container">
-                        <div class="welcome flex item-center">
-                            <span>Welcome to</span>
-                            <h2 class="brand_name">The</h2>
-                            <img src="./icons/017-gem.svg" alt="">
-                            <h2 class="brand_name">Alcove</h2>
-                        </div>
-                        <h1>The World Best <span>Blogging</span> Website</h1>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime similique optio vel rem? Soluta nulla similique nobis placeat quaerat dolorem! Veniam expedita, ullam perferendis autem soluta ipsam nostrum corrupti reprehenderit!</p>
-                        <div>
-                            <button class="btn btn-primary">Read More</button>
-
-                        </div>
-                        <div class="hero-image"> -->
-                <!-- 410*332 
-                            <img src="./images/heroimg.jpg" alt="">
-                        </div>
-                    </div>---->
-                <!-- <a href="#top-products">
-                        <div class="scroll-down"></div>
-                    </a> 
-
-                </header>-->
-                <!-------------Hero section-------------->
-
                 <!-------------Carasoul section-------------->
                 <section id="top-products" class="top-products">
                     <div class="container">
@@ -337,7 +309,6 @@
                             <h1 class="section-heading">Sidebar</h1>
                             <div class="category">
                                 <h2>Categories</h2>
-
                                 <ul class="category-list">
                                     <li class="list-items">
                                         <a href="#">Softwares</a>
@@ -470,150 +441,96 @@
                         </aside>
                     </div>
                 </section>
-
                 <!-- Site Content -->
 
 
+                <section class="shortner_link magic-shadow" id="shortner_link">
 
-                <!-- <section class="about-meal">
                     <div class="container">
-                        <h1 class="section-heading">About Fresh Meal</h1>
-                        <div class="about-meal-wrap flex">
-                            <div class="flex-1 ">
-                                <img src="./images/sectionimg.jpg" alt="">
-                            </div>
-                            <div class="flex-1">
-                                <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. </h2>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis ipsam omnis rem quas ducimus sapiente quidem ullam! Quos, sunt repellendus. Corporis laboriosam ullam provident ducimus id labore excepturi ut officia?</p>
-                                <button class="btn btn-secondary">Read More</button>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                        <h1 class="section-heading">Link Shortner</h1>
 
-                <section class="our-services">
-                    <div class="container">
-                        <h1 class="section-heading">Our Services</h1>
-                        <div class="card-wrapper flex">
-                            <div class="service-card magic-shadow-sm">
-                                <img class="icon" src="./icons/transport.svg" alt="">
-                                <h2>Free Home Delivery</h2>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur doloremque quo quia mollitia quaerat possimus ullam ut vitae, eveniet, voluptates sint provident voluptate! Repellendus, fuga. In ratione atque harum
-                                    aut?
-                                </p>
-                                <button class="btn btn-secondary">Read More</button>
-                            </div>
+                        <div class="wrapper">
+                            <form action="#" autocomplete="off">
+                                <img class="url-icon" src="./icons/ShareIcon/004-link-3.svg" alt="">
+                                <input type="text" spellcheck="false" name="full_url" placeholder="Enter or paste a long url" required>
+                                <button>Shorten</button>
+                            </form>
+                            <?php
+                            $sql2 = mysqli_query($conn, "SELECT * FROM url ORDER BY id DESC");
+                            if (mysqli_num_rows($sql2) > 0) {;
+                                ?>
+                                <div class="count">
+                            <?php
+                            $sql3 = mysqli_query($conn, "SELECT COUNT(*) FROM url");
+                                $res = mysqli_fetch_assoc($sql3);
 
-                            <div class="service-card magic-shadow-sm">
-                                <img class="icon" src="./icons/bag.svg" alt="">
-                                <h2 class="text-primary">Free Home Delivery</h2>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur doloremque quo quia mollitia quaerat possimus ullam ut vitae, eveniet, voluptates sint provident voluptate! Repellendus, fuga. In ratione atque harum
-                                    aut?
-                                </p>
-                                <button class="btn btn-primary">Read More</button>
+                                $sql4 = mysqli_query($conn, "SELECT clicks FROM url");
+                                $total = 0;
+                                while ($count = mysqli_fetch_assoc($sql4)) {
+                                    $total = $count['clicks'] + $total;
+                                }
+                                ?>
+                            <span>Total Links: <span><?php echo end($res) ?></span> & Total Clicks: <span><?php echo $total ?></span></span>
+                            <a href="php/delete.php?delete=all">Clear All</a>
                             </div>
-
-                            <div class="service-card magic-shadow-sm">
-                                <img class="icon" src="./icons/usd.svg" alt="">
-                                <h2>Free Home Delivery</h2>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur doloremque quo quia mollitia quaerat possimus ullam ut vitae, eveniet, voluptates sint provident voluptate! Repellendus, fuga. In ratione atque harum
-                                    aut?
-                                </p>
-                                <button class="btn btn-secondary">Read More</button>
-                            </div>
-                        </div>
-                    </div>
-
-                </section>
-
-                <section class="big-deal">
-                    <div class="container">
-                        <h1 class="section-heading text-pure">Big Deals of the Week</h1>
-                        <div class="timer">
-                            <div>
-                                <span>02</span>
-                                <span>Days</span>
-                            </div>
-                            <div>
-                                <span>24</span>
-                                <span>Hours</span>
-                            </div>
-                            <div>
-                                <span>55</span>
-                                <span>Minutes</span>
-                            </div>
-                            <div>
-                                <span>58</span>
-                                <span>Seconds</span>
-                            </div>
-
-                        </div>
-                    </div>
-                </section>
-
-                <section class="latest-news">
-                    <div class="container">
-                        <h1 class="section-heading">Category Wise Latest Blogs</h1>
-                        <div class="article-wrapper">
-                            <article class="card magic-shadow-sm">
-                                <div>
-                                    <img src="./images/FB_IMG_1612246758960.jpg" alt="">
+                            <div class="urls-area">
+                                <div class="title">
+                                    <li>Shorten URL</li>
+                                    <li>Orignal URL</li>
+                                    <li>Clicks</li>
+                                    <li>Actions</li>
                                 </div>
-                                <div class="card-content">
-                                    <div class="post-meta flex item-center justify-between">
-                                        <span>July 03,2020</span>
-                                        <div>
-                                            <span>Posted by <strong>Fresh Meal</strong></span>
-                                            <span class="comment-count">12 Comments</span>
+                                <?php
+                                while ($row = mysqli_fetch_assoc($sql2)) {
+                                 ?>
+                                    <div class="url-data">
+                                    <li>
+                                    <a href="<?php echo $row['shorten_url'] ?>" target="_blank">
+                                    <?php
+                                    if ($domain . strlen($row['shorten_url']) > 50) {
+                                     echo $domain . substr($row['shorten_url'], 0, 50) . '...';
+                                    } else {
+                                        echo $domain . $row['shorten_url'];
+                                    }
+                                    ?>
+                                    </a>
+                                    </li>
+                                    <li>
+                                    <?php
+                    if (strlen($row['full_url']) > 60) {
+                                echo substr($row['full_url'], 0, 60) . '...';
+                            } else {
+                                echo $row['full_url'];
+                            }
+                            ?>
+                                    </li>
+                                </li>
+                                    <li><?php echo $row['clicks'] ?></li>
+                                    <li><a href="php/delete.php?id=<?php echo $row['shorten_url'] ?>">Delete</a></li>
+                                </div>
+                                <?php
+                    }
+                        ?>
+                                                </div>
+                                                <?php
+                    }
+                    ?>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h2>
-                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda, eum illo. Nemo porro voluptas ducimus minus at nulla corporis blanditiis consequuntur, praesentium cum natus suscipit fugit nihil! Dignissimos, explicabo
-                                        corrupti!
-                                    </p>
-                                </div>
-                            </article>
-
-                            <article class="card magic-shadow-sm">
-                                <div>
-                                    <img src="./images/FB_IMG_1612519231154.jpg" alt="">
-                                </div>
-                                <div class="card-content">
-                                    <div class="post-meta flex item-center justify-between">
-                                        <span>July 03,2020</span>
-                                        <div>
-                                            <span>Posted by <strong>Fresh Meal</strong></span>
-                                            <span class="comment-count">12 Comments</span>
-                                        </div>
-                                    </div>
-                                    <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h2>
-                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda, eum illo. Nemo porro voluptas ducimus minus at nulla corporis blanditiis consequuntur, praesentium cum natus suscipit fugit nihil! Dignissimos, explicabo
-                                        corrupti!
-                                    </p>
-                                </div>
-                            </article>
+                    <div class="blur-effect"></div>
+                    <div class="popup-box">
+                        <div class="info-box">
+                            Your short link is ready. You can alsoedit your shortlink now but can't edit once you saved it.
                         </div>
-                        <div class="text-center btn-wrapper">
-                            <button class="btn btn-secondary">See More</button>
-                        </div>
-                    </div>
-                </section> -->
-
-                <section class="subscribe">
-                    <div class="container flex item-center">
-                        <div class="flex-1">
-                            <img src="./images/FB_IMG_1619383695628.jpg" alt="">
-                        </div>
-                        <div class="flex-1">
-                            <h1>Subscribe to your Newsletter</h1>
-                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Adipisci culpa ullam maiores modi, error veniam aspernatur repellat unde quaerat! Vero sit autem unde quidem adipisci, iste laboriosam beatae ex deleniti!</p>
-                            <div class="input-wrap">
-                                <input type="email" placeholder="email@thegemsalcove.com">
-                                <button>Subscribe</button>
-                            </div>
-                        </div>
+                        <form action="#" autocomplete="off">
+                            <label>Edit your shorten URL</label>
+                            <input type="text" class="shorten-url" spellcheck="false" required>
+                            <img class="copy-icon" src="./icons/002-copy.svg" alt="">
+                            <button>Save</button>
+                        </form>
                     </div>
                 </section>
+
 
                 <section class="contact-us flex">
                     <div class="contact-info-wrapper flex-1">
@@ -756,8 +673,12 @@
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
-    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script src="./js/app.js"></script>
+    <script src="./js/shorten.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+
+
 
 </body>
 
