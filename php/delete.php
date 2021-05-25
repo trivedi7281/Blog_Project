@@ -4,18 +4,18 @@
         $delete_id = mysqli_real_escape_string($conn, $_GET['id']);
         $sql = mysqli_query($conn, "DELETE FROM url WHERE shorten_url = '{$delete_id}'");
         if($sql){
-            header("Location: ../");
+            header("Location: ../index.php#shortner_link");
         }else{
-            header("Location: ../");
+            header("Location: ../index.php#shortner_link");
         }
     }elseif(isset($_GET['delete'])){
         $sql3 = mysqli_query($conn, "DELETE FROM url");
         if($sql3){
-            header("Location: ../");
+            header("Location: ../index.php#shortner_link");
         }else{
-            header("Location: ../");
+            header("Location: ../index.php#shortner_link");
         }
     }else{
-        header("Location: ../");
+        header("Location: ../index.php#shortner_link");
     }
 ?>

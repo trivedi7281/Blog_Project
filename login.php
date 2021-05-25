@@ -35,10 +35,10 @@
             <input type="submit" class="form_button" value="Sign In">
             <div class="implinks">
                 <div class="Forpass">Forgot Password ?
-                    <a href="./forgotPassword.html"><img src="./icons/forgotPass.svg" alt=""></a>
+                    <a href="./forgotPassword.php"><img src="./icons/forgotPass.svg" alt=""></a>
                 </div>
                 <div class="register">Join Us Here !
-                    <a href="./register.html"><img src="./icons/002-verify.svg" alt=""></a>
+                    <a href="./register.php"><img src="./icons/002-verify.svg" alt=""></a>
                 </div>
             </div>
             <div class="social">

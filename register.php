@@ -48,7 +48,7 @@
                 <span class="rememberLabel">Accept T&C</span>
             </div>
             <input type="submit" class="form_button" value="Register">
-            <div class="register">Already Register&nbsp;!&nbsp;Please <a href="./login.html">Login In</a></div>
+            <div class="register">Already Register&nbsp;!&nbsp;Please <a href="./login.php">Login In</a></div>
         </form>
     </div>
 </body>
